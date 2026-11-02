@@ -59,3 +59,16 @@
 - Updated metadata, input parsing, timer boundaries, tests, both READMEs and the design/plan records. Regenerated the distribution.
 - Both quick-start sections now explain adding step-level `continue-on-error: true` beside `uses` when notification failures should not fail the workflow. Preserved copy-ready YAML indentation.
 - All 73 tests, bundled fixtures, lint, formatting, metadata checks and distribution consistency passed. No commit or real notification was made.
+
+## Push and live acceptance — 2026-11-02
+
+- User authorized committing/pushing the implementation and running real notifications from the existing sibling test repository, including fixes needed to pass acceptance.
+- Revalidated all 73 local tests and bundled fixtures. Reviewed the 33-file initial commit scope and checked for accidentally included credentials.
+- Pushed Action implementation `e810086fee01c654deb1351cc1ef72f3f2ff7f96` to `origin/master` with `feat: add MeowPush notification action`.
+- Hosted CI [41419641293](https://github.com/azurdream/meowpush-gh-actions/actions/runs/41419641293) passed: quality plus Linux, Windows and macOS on both x64 and arm64. This includes real runner output/failure handling and the single-request mock checks.
+- Pushed the test repository's manual live acceptance workflow as `66bb30028a3221162886d8a39ee439573cd5b3fc`, pinning both Action references to the implementation SHA. It uses the existing `MEOWPUSH_KEY` secret; no secret value was read locally.
+- Live acceptance run `41420093162` passed on Windows/macOS but returned HTTP 400 `invalid_request` on Linux. The fixture used the runner label in collapse_id, and the Ubuntu labels contain disallowed periods. The Action correctly surfaced the API error.
+- Fixed only the test workflow in `a7a47d7f04a66c0c5fd53af0edaae6b6357962ab`, using distinct valid OS/architecture identifiers. Local validation checked all six IDs.
+- Corrected live run `41420604464` passed all seven jobs: six real sends across Linux/Windows/macOS x64/arm64 and cross-job output verification. All sends returned successful acceptance with zero failed targets. The expected missing-key failure also preserved outputs and step-level continue-on-error behavior.
+- The private test repository records the run links, counts and notification IDs in `docs/acceptance-2026-11-02.md`. API acceptance and output behavior are verified; device display is not inferred from them.
+- No Action runtime bug was found in hosted acceptance. The tested implementation remains `e810086fee01c654deb1351cc1ef72f3f2ff7f96`; subsequent changes in this repository only record verification results. No release tags or Marketplace publication were created.

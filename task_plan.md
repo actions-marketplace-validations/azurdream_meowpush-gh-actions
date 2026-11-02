@@ -59,10 +59,10 @@ Status: complete
 
 ## Phase 5 — Push and live acceptance
 
-Status: in_progress
+Status: complete
 
-- [ ] Verify both remotes and secret names, validate the intended commit scope, and push the Action implementation.
-- [ ] Configure the existing test repository to use the Action at an exact commit SHA with its existing secret.
-- [ ] Run the Action repository's six-platform CI and real cross-repository acceptance tests; inspect results and logs.
-- [ ] Fix failures, push scoped English Conventional Commits and rerun affected tests until acceptance passes.
-- [ ] Record commit/run links and observed acceptance results, distinguishing API acceptance from device display.
+- [x] Verify both remotes and secret names, validate the intended commit scope, and push the Action implementation.
+- [x] Configure the existing test repository to use the Action at an exact commit SHA with its existing secret.
+- [x] Run the Action repository's six-platform CI and real cross-repository acceptance tests; inspect results and logs.
+- [x] Fix failures, push scoped English Conventional Commits and rerun affected tests until acceptance passes.
+- [x] Record commit/run links and observed acceptance results, distinguishing API acceptance from device display.
