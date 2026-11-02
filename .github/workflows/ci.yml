@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Code, metadata and distribution
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run check:metadata
+      - run: npm run check:dist
+      - name: Validate workflow syntax with actionlint
+        shell: bash
+        env:
+          ACTIONLINT_VERSION: '1.7.12'
+          ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+        run: |
+          curl --fail --silent --show-error --location \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz" \
+            --output "$RUNNER_TEMP/actionlint.tar.gz"
+          printf '%s  %s\n' "$ACTIONLINT_SHA256" "$RUNNER_TEMP/actionlint.tar.gz" | sha256sum --check
+          tar -xzf "$RUNNER_TEMP/actionlint.tar.gz" -C "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint" -color
+
+  integration:
+    name: Action on ${{ matrix.runner }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        runner:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+          - windows-2025
+          - windows-11-arm
+          - macos-15-intel
+          - macos-15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm test
+      - name: Start local fixture server
+        id: mock
+        run: node scripts/ci-mock.js start
+      - name: Send to local fixture
+        id: success
+        uses: ./
+        with:
+          keys: '["mpdv0000000000000001","mpgp0000000000000002"]'
+          body: |-
+            CI ✓
+            Line 2
+          title: Build result
+          badge: '0'
+          ttl: '0'
+          data: '{"id":9007199254740993,"decimal":0.123456789012345678901}'
+          endpoint: ${{ steps.mock.outputs.endpoint }}/success
+      - name: Verify successful outputs
+        run: node scripts/ci-assert.js success
+        env:
+          ACTION_RESULT: ${{ toJSON(steps.success) }}
+      - name: Exercise delivery failure
+        id: failure
+        continue-on-error: true
+        uses: ./
+        with:
+          key: mpdv0000000000000001
+          body: Expected failure fixture
+          endpoint: ${{ steps.mock.outputs.endpoint }}/failure
+      - name: Verify failure outputs and step-only tolerance
+        run: node scripts/ci-assert.js failure
+        env:
+          ACTION_RESULT: ${{ toJSON(steps.failure) }}
+      - name: Exercise HTTP error envelope
+        id: http_error
+        continue-on-error: true
+        uses: ./
+        with:
+          key: mpdv0000000000000001
+          body: Expected HTTP error fixture
+          endpoint: ${{ steps.mock.outputs.endpoint }}/http-error
+      - name: Verify HTTP error outputs
+        run: node scripts/ci-assert.js http-error
+        env:
+          ACTION_RESULT: ${{ toJSON(steps.http_error) }}
+      - name: Verify request counts
+        run: node scripts/ci-mock.js verify
+      - name: Stop local fixture server
+        if: always()
+        run: node scripts/ci-mock.js stop

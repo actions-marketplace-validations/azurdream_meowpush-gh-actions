@@ -1,0 +1,62 @@
+name: MeowPush Notify
+author: MeowPush
+description: Send a MeowPush notification and expose sanitized delivery results.
+branding:
+  icon: bell
+  color: orange
+inputs:
+  key:
+    description: Application Push Key (recommended). Device and Group keys remain compatible but are not recommended. Mutually exclusive with keys.
+  keys:
+    description: JSON array for existing key configurations. Prefer a single Application Push Key via key; an Application key must be the sole entry. Mutually exclusive with key.
+  body:
+    description: Notification body. Whitespace and line breaks are preserved.
+    required: true
+  title:
+    description: Notification title.
+  subtitle:
+    description: Notification subtitle.
+  level:
+    description: Notification interruption level (passive, active, time-sensitive).
+  badge:
+    description: Nonnegative integer badge count; zero clears the badge.
+  icon:
+    description: HTTPS URL of the notification source icon.
+  image:
+    description: HTTPS URL of the notification image.
+  url:
+    description: URI opened when the notification is tapped.
+  group:
+    description: Notification grouping identifier.
+  collapse-id:
+    description: Replace a previous notification with the same identifier. Maps to collapse_id.
+  ttl:
+    description: Nonnegative integer notification lifetime in seconds.
+  data:
+    description: Custom JSON object.
+  endpoint:
+    description: Complete HTTP or HTTPS send endpoint.
+    default: https://send.meowpush.com/
+  timeout:
+    description: Action-side timeout in milliseconds for sending the request and reading its response. Must be a positive integer.
+    default: '30000'
+outputs:
+  success:
+    description: 'true only for a valid 2xx response with accepted > 0 and failed = 0.'
+  notification-id:
+    description: Server notification identifier, or empty if unavailable.
+  accepted:
+    description: Accepted result count, or empty if unavailable; not proof of device delivery.
+  failed:
+    description: Failed result count, or empty if unavailable.
+  results:
+    description: Sanitized JSON result array with zero-based key_index and source_key_indexes instead of credentials.
+  http-status:
+    description: HTTP status code, or empty if no response was received.
+  error-code:
+    description: API error code or an action_ prefixed error code; empty on success.
+  error-message:
+    description: Sanitized error message; empty on success.
+runs:
+  using: node24
+  main: dist/index.cjs
