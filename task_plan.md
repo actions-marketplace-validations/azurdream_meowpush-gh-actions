@@ -78,10 +78,10 @@ Status: complete
 
 ## Phase 7 — Successful-send log cleanup and patch release
 
-Status: in_progress
+Status: complete
 
-- [ ] Remove the redundant success-log note, rebuild and validate the patch.
-- [ ] Commit/push v1.0.1, publish its immutable release and update v1 with an expected-old-ref lease.
-- [ ] Verify the new v1 runtime logs in the test repository and record the results.
+- [x] Remove the redundant success-log note, rebuild and validate the patch.
+- [x] Commit/push v1.0.1, publish its immutable release and update v1 with an expected-old-ref lease.
+- [x] Verify the new v1 runtime logs in the test repository and record the results.
 
 The user explicitly authorized pushing and republishing this fix, including v1. The immutable v1.0.0 tag must remain unchanged.

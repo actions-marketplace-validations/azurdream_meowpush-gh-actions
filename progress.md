@@ -89,4 +89,9 @@
 
 - User requested removal of the delivery-status note from successful sends and explicitly authorized a new release and v1 update.
 - Removed the note from the runtime log; successful sends retain their accepted-result count. Request behavior and outputs are unchanged.
-- Prepared v1.0.1, updated the package/lockfile and changelog, and regenerated the distribution. Validation and publication are pending.
+- Prepared v1.0.1, updated the package/lockfile and changelog, and regenerated the distribution. All 73 local tests, fixtures and repository checks passed.
+- Pushed patch `bdf8188c6369a155ee7a46e9bafa23c43c0e2599`; hosted CI run `41446017112` passed quality plus all six platform jobs for that exact revision.
+- Published immutable [v1.0.1](https://github.com/azurdream/meowpush-gh-actions/releases/tag/v1.0.1) and updated only the movable v1 alias using an expected-old-ref lease. v1.0.0 remains unchanged.
+- Removed the equivalent reminder from the private test workflow's job summary in `9d88a55`.
+- Live run `41446862921` passed all seven jobs. Each of the six runner setup logs resolved `@v1` to the patch SHA, and all six successful-send logs contained only the accepted-result count. Both redundant delivery reminders were absent from the downloaded run log.
+- Verified v1 and v1.0.1 resolve to the patch SHA; immutable v1.0.0 still resolves to `9973122`. The private test repository records the log verification in `docs/v1.0.1-acceptance-2026-11-02.md`.
