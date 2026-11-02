@@ -69,9 +69,9 @@ Status: complete
 
 ## Phase 6 — Versioned publication
 
-Status: in_progress
+Status: complete
 
-- [ ] Commit release notes and validate the exact release revision in hosted CI.
-- [ ] Publish v1.0.0 and point v1 to the same revision, keeping the major-version alias movable.
-- [ ] Switch the test repository to uses: azurdream/meowpush-gh-actions@v1 and complete live acceptance.
-- [ ] Verify remote refs, release state, packaged files and record the publication result.
+- [x] Commit release notes and validate the exact release revision in hosted CI.
+- [x] Publish v1.0.0 and point v1 to the same revision, keeping the major-version alias movable.
+- [x] Switch the test repository to uses: azurdream/meowpush-gh-actions@v1 and complete live acceptance.
+- [x] Verify remote refs, release state, packaged files and record the publication result.
