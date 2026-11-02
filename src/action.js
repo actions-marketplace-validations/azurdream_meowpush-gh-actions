@@ -34,9 +34,7 @@ export async function runAction(core, { fetchImpl = globalThis.fetch } = {}) {
   for (const [name, value] of Object.entries(outputs))
     core.setOutput(name, value);
   if (outputs.success === 'true') {
-    core.info(
-      `MeowPush: ${outputs.accepted} accepted result(s). Device delivery is not confirmed.`,
-    );
+    core.info(`MeowPush: ${outputs.accepted} accepted result(s).`);
   } else {
     core.setFailed(outputs['error-message']);
   }

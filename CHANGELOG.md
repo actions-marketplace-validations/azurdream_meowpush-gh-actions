@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 — 2026-11-02
+
+- Simplify successful-send logs by removing the redundant delivery-status message.
+
 ## 1.0.0 — 2026-11-02
 
 Initial release of the MeowPush GitHub Action.

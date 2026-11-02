@@ -84,3 +84,9 @@
 - Enabled immutable releases and published [v1.0.0](https://github.com/azurdream/meowpush-gh-actions/releases/tag/v1.0.0), verified as non-draft, non-prerelease and immutable. Created the separate movable `v1` tag. Both remote refs resolve to the validated release SHA.
 - Test repository commit `ff46c60c24d2aa30b12a1a11e029d58b4dda2114` switches both calls to the actual `@v1` reference. Live run `41441406394` passed all seven jobs: six real sends plus cross-job outputs. Every runner log confirms downloading `@v1` at the release SHA; all sends reported successful acceptance with zero failed targets. Expected validation failure and continue-on-error checks passed.
 - Verified `@v1` exposes the bundled entry point and license notices, matching the tested distribution. Detailed publication evidence is recorded privately in `docs/v1-acceptance-2026-11-02.md` in the test repository. No Marketplace listing was created.
+
+## Successful-send log cleanup — 2026-11-02
+
+- User requested removal of the delivery-status note from successful sends and explicitly authorized a new release and v1 update.
+- Removed the note from the runtime log; successful sends retain their accepted-result count. Request behavior and outputs are unchanged.
+- Prepared v1.0.1, updated the package/lockfile and changelog, and regenerated the distribution. Validation and publication are pending.

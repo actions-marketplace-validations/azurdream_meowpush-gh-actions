@@ -75,3 +75,13 @@ Status: complete
 - [x] Publish v1.0.0 and point v1 to the same revision, keeping the major-version alias movable.
 - [x] Switch the test repository to uses: azurdream/meowpush-gh-actions@v1 and complete live acceptance.
 - [x] Verify remote refs, release state, packaged files and record the publication result.
+
+## Phase 7 — Successful-send log cleanup and patch release
+
+Status: in_progress
+
+- [ ] Remove the redundant success-log note, rebuild and validate the patch.
+- [ ] Commit/push v1.0.1, publish its immutable release and update v1 with an expected-old-ref lease.
+- [ ] Verify the new v1 runtime logs in the test repository and record the results.
+
+The user explicitly authorized pushing and republishing this fix, including v1. The immutable v1.0.0 tag must remain unchanged.
