@@ -35,7 +35,7 @@ Status: complete
 
 ## Boundaries
 
-Do not create branches/worktrees or publish tags/releases without a separate request. On 2026-11-02 the user authorized committing and pushing this implementation, configuring the existing sibling test repository, and sending real notifications through its configured GitHub Secrets for acceptance testing. Fixes may be committed and pushed as needed to complete that testing. Action repository: azurdream/meowpush-gh-actions; test repository: azurdream/meowpush-gh-actions-test.
+Do not create branches/worktrees. On 2026-11-02 the user authorized committing and pushing this implementation, configuring the existing sibling test repository, and sending real notifications through its configured GitHub Secrets for acceptance testing. The user subsequently authorized fixing the missing v1 publication, including the v1.0.0 release and v1 tag. Action repository: azurdream/meowpush-gh-actions; test repository: azurdream/meowpush-gh-actions-test.
 
 ## Verification
 
@@ -66,3 +66,12 @@ Status: complete
 - [x] Run the Action repository's six-platform CI and real cross-repository acceptance tests; inspect results and logs.
 - [x] Fix failures, push scoped English Conventional Commits and rerun affected tests until acceptance passes.
 - [x] Record commit/run links and observed acceptance results, distinguishing API acceptance from device display.
+
+## Phase 6 — Versioned publication
+
+Status: in_progress
+
+- [ ] Commit release notes and validate the exact release revision in hosted CI.
+- [ ] Publish v1.0.0 and point v1 to the same revision, keeping the major-version alias movable.
+- [ ] Switch the test repository to uses: azurdream/meowpush-gh-actions@v1 and complete live acceptance.
+- [ ] Verify remote refs, release state, packaged files and record the publication result.

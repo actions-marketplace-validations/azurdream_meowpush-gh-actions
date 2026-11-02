@@ -73,3 +73,10 @@
 - The private test repository records the run links, counts and notification IDs in `docs/acceptance-2026-11-02.md`. API acceptance and output behavior are verified; device display is not inferred from them.
 - On 2026-11-02 the user separately confirmed receiving the test notifications with normal content, in response to the device check covering Chinese text, multiline content and the run link. Device receipt/display is therefore confirmed by user observation, separately from the API counts above.
 - No Action runtime bug was found in hosted acceptance. The tested implementation remains `e810086fee01c654deb1351cc1ef72f3f2ff7f96`; subsequent changes in this repository only record verification results. No release tags or Marketplace publication were created.
+
+## Versioned publication — 2026-11-02
+
+- User authorized fixing the missing `v1` publication and submitting the changes.
+- Confirmed remote `master` matches the local checkout, and neither `v1` nor `v1.0.0` exists. GitHub release immutability is available but currently disabled.
+- Prepared initial release notes. Runtime files are unchanged from the implementation that passed six-platform live acceptance.
+- Release publication and a test-repository run using the actual `@v1` alias are pending.
